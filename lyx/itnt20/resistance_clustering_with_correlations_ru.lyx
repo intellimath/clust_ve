@@ -1,0 +1,1948 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usepackage[orientation=landscape,size=custom,width=16,height=12,scale=0.5]{beamerposter}
+
+\usetheme{metropolis}
+
+\setbeamercovered{transparent}
+
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+\setbeamertemplate{enumerate items}[square]
+
+\setbeamersize{text margin left=2.0em}
+\setbeamersize{text margin right=2.0em}
+
+\usepackage{mymath}
+\setmathcolor{red!80!black}
+\let\oldemph=\emph
+\def\emph#1{{\color{brown}#1}}
+
+\usepackage{algorithm}
+\usepackage{caption}
+\captionsetup[algorithm]{labelsep=colon}
+
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\usepackage{stmaryrd}
+
+\abovedisplayshortskip=6pt
+\belowdisplayshortskip=6pt
+\abovedisplayskip=6pt plus 3.0pt minus 3.0pt
+\belowdisplayskip=6pt plus 3.0pt minus 3.0pt
+%\def\arraystretch{1.0}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package auto
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "PT Serif"
+\font_sans "cmbr" "PT Sans"
+\font_typewriter "default" "PT Mono"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 90 90
+\font_tt_scale 100 100
+\use_microtype true
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 2
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 2
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style russian
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Робастный метод k-means на основе минимизации дифференцируемых оценок среднего,
+ нечувствительных к
+\begin_inset space ~
+\end_inset
+
+выбросам
+\end_layout
+
+\begin_layout Author
+З.М.
+\begin_inset space ~
+\end_inset
+
+Шибзухов, М.А.
+\begin_inset space ~
+\end_inset
+
+Казаков, Д.П.
+\begin_inset space ~
+\end_inset
+
+Димитриченко
+\end_layout
+
+\begin_layout Date
+
+\series bold
+ИТНТ
+\begin_inset space \thinspace{}
+\end_inset
+
+–
+\begin_inset space \thinspace{}
+\end_inset
+
+2020
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Классический метод
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Классический метод поиска центров и ковариационных матриц кластеров:
+\begin_inset Formula 
+\[
+\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}=\arg\min_{\mathbf{c}_{1},\dots,\mathbf{c}_{K}}\frac{1}{N}\sum_{k=1}^{N}\min_{j=1,\dots,K}d(\mathbf{x}_{k};\mathbf{c}_{j},\mathbf{S}_{j}),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{c}_{1},\dots,\mathbf{c}_{K}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– центры кластеров, 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– ковариационные матрицы, 
+\begin_inset Formula 
+\[
+d(\mathbf{x};\mathbf{c},\mathbf{S})=\ln|\mathbf{S}|+(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})
+\]
+
+\end_inset
+
+– квадрат расстояния Махаланобиса с
+\begin_inset space ~
+\end_inset
+
+ковариационной матрицей 
+\begin_inset Formula $\mathbf{S}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Такая постановка задачи основана на
+\begin_inset space ~
+\end_inset
+
+предположении о
+\begin_inset space ~
+\end_inset
+
+том, точки каждого кластера подчиняются многомерному нормальному распределению
+ с
+\begin_inset space ~
+\end_inset
+
+плотностью
+\begin_inset Formula 
+\[
+p(\mathbf{x};\mathbf{c},\mathbf{S})\propto\frac{1}{\sqrt{|\mathbf{S}|}}e^{-\frac{1}{2}(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})},
+\]
+
+\end_inset
+
+а произвольная точка 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ относится к
+\begin_inset space ~
+\end_inset
+
+кластеру с
+\begin_inset space ~
+\end_inset
+
+номером
+\begin_inset Formula 
+\[
+j(\mathbf{x})=\arg\max_{j=1,\dots,K}p(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Классический алгоритм
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Задача сводится к
+\begin_inset space ~
+\end_inset
+
+решению системы уравнений:
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{l}
+\mathbf{c}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})},
+\end{array}\right.
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{I}_{j}\subset\{1,\dots,N\}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– индексы точек, попадающих в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $j$
+\end_inset
+
+-ый кластер.
+\end_layout
+
+\begin_layout Standard
+Итерационная процедура расширенного алгоритма 
+\family sans
+k-means
+\family default
+:
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{l}
+\mathbf{c}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}(\mathbf{x}_{k}-\mathbf{c}_{j,t})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t})},
+\end{array}\right.
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{I}_{j,t}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– индексы точек, попадающих в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $j$
+\end_inset
+
+-ый кластер на
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $t$
+\end_inset
+
+-ом шаге.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Проблема выбросов
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Можно наблюдать существенное искажение результатов работы алгоритма, если
+ эмпирическое распределение 
+\begin_inset Formula $\{D(\mathbf{x}_{1}),\dots,D(\mathbf{x}_{N})\}$
+\end_inset
+
+ содержит 
+\emph on
+выбросы
+\emph default
+, где
+\begin_inset Formula 
+\[
+D(\mathbf{x})=D(\mathbf{x};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\min_{j=1,\dots,K}d(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Это приводит к искажению оценки среднего арифметического в
+\begin_inset space ~
+\end_inset
+
+выражении для целевой функции
+\begin_inset Formula 
+\[
+\mathcal{Q}(\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\frac{1}{N}\sum_{k=1}^{N}\min_{j=1,\dots,K}d(\mathbf{x}_{k};\mathbf{c}_{j},\mathbf{S}_{j})
+\]
+
+\end_inset
+
+Что и является причиной искажения оценок 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*};\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Классический метод преодоления влияния выбросов
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Классический метод преодоления влияния выбросов основан на
+\begin_inset space ~
+\end_inset
+
+замене функции 
+\begin_inset Formula $d(\mathbf{x};\mathbf{c},\mathbf{S})$
+\end_inset
+
+ на
+\begin_inset Formula 
+\[
+d_{\varrho}(\mathbf{x};\mathbf{c},\mathbf{S})=\ln|\mathbf{S}|+\varrho\bigl((\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})\bigr),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\varrho(r)$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– функция для подавления влияния выбросов.
+\end_layout
+
+\begin_layout Standard
+Она соответствует вероятностному распределению точек с
+\begin_inset space ~
+\end_inset
+
+плотностью 
+\begin_inset Formula 
+\[
+p(\mathbf{x};\mathbf{c},\mathbf{S})\propto\frac{1}{\sqrt{|\mathbf{S}|}}e^{-\frac{1}{2}\varrho\bigl((\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})\bigr)}.
+\]
+
+\end_inset
+
+ Задача оптимизации имеет вид:
+\begin_inset Formula 
+\[
+\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}=\arg\min_{\mathbf{c}_{1},\dots,\mathbf{c}_{K}}\frac{1}{N}\sum_{k=1}^{N}D_{\varrho}(\mathbf{x}_{k}),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula 
+\[
+D_{\varrho}(\mathbf{x})=D_{\varrho}(\mathbf{x};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\min_{j=1,\dots,K}d_{\varrho}(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Классический метод преодоления влияния выбросов
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Введением функции 
+\begin_inset Formula $\varrho$
+\end_inset
+
+ можно добиться уменьшения 
+\begin_inset Quotes rld
+\end_inset
+
+больших
+\begin_inset Quotes rrd
+\end_inset
+
+ значений квадрата функции Махаланобиса, если 
+\begin_inset Formula $\varrho(r)$
+\end_inset
+
+ растет не
+\begin_inset space ~
+\end_inset
+
+быстрее, чем линейная.
+ 
+\end_layout
+
+\begin_layout Standard
+В
+\begin_inset space ~
+\end_inset
+
+качестве примера можно привести функцию 
+\begin_inset Formula $\varrho(r)=H(\sqrt{r})$
+\end_inset
+
+, где 
+\begin_inset Formula $H$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– функция Хьюбера:
+\begin_inset Formula 
+\[
+H(r)=\begin{cases}
+\frac{1}{2}r^{2}, & \text{если}\ r\leqslant c\\
+rc-\frac{1}{2}c^{2}, & \text{если}\ r<c.
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Наряду с
+\begin_inset space ~
+\end_inset
+
+функцией Хьюбера можно также использовать функцию 
+\begin_inset Formula $S(r)=\sqrt{c^{2}+r^{2}}-c$
+\end_inset
+
+, которая, в
+\begin_inset space ~
+\end_inset
+
+отличие от
+\begin_inset space ~
+\end_inset
+
+нее, имеет непрерывную производную второго порядка.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Классический алгоритм
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Задача сводится к
+\begin_inset space ~
+\end_inset
+
+решению системы уравнений:
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{lc}
+\mathbf{c}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}, & V_{j}=\sum\limits _{k\in\mathbf{I}_{j}}v_{k}\\
+\mathbf{S}_{j}=\frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j}),
+\end{array}\right.
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $v_{k}=\psi\bigl(D_{\varrho}(\mathbf{x}_{k})\bigr)$
+\end_inset
+
+, 
+\begin_inset Formula $\psi(r)=\varrho^{\prime}(r)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Для единственности решения необходимо, чтобы 
+\begin_inset Formula $\varrho^{\prime}(r)$
+\end_inset
+
+ была неубывающей.
+ Но из этого вытекает, что достаточно сделать выбросами порядка 
+\begin_inset Formula $\frac{1}{n+1}$
+\end_inset
+
+-ой части набора точек, чтобы сломать робастность такого метода.
+ 
+\end_layout
+
+\begin_layout Standard
+Тем не
+\begin_inset space ~
+\end_inset
+
+менее, если матрицы 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+ заданы, то задача поиска центров 
+\begin_inset Formula $\mathbf{c}_{1},\dots,\mathbf{c}_{K}$
+\end_inset
+
+ сохраняет робастность.
+\end_layout
+
+\begin_layout Standard
+Потеря робастности как раз связана с
+\begin_inset space ~
+\end_inset
+
+оценкой матриц 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Оценки среднего, нечувствительные к выбросам
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+В
+\begin_inset space ~
+\end_inset
+
+настоящей работе предлагается новый подход, основанный на
+\begin_inset space ~
+\end_inset
+
+замене среднего арифметического в
+\begin_inset Formula 
+\[
+\mathcal{Q}(\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\frac{1}{N}\sum_{k=1}^{N}\min_{j=1,\dots,K}d(\mathbf{x}_{k};\mathbf{c}_{j},\mathbf{S}_{j})
+\]
+
+\end_inset
+
+на 
+\emph on
+дифференцируемую оценку среднего
+\emph default
+ 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+, которая будет нечувствительной к
+\begin_inset space ~
+\end_inset
+
+выбросам.
+ 
+\end_layout
+
+\begin_layout Standard
+Такая замена позволит на
+\begin_inset space ~
+\end_inset
+
+уровне математической постановки задачи заложить фундамент устойчивости
+ решения задачи.
+\end_layout
+
+\begin_layout Standard
+Такие оценки можно построить разными способами.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+М-оценки среднего
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Первый
+\emph default
+ способ основан приближении медианы на базе 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-среднего:
+\begin_inset Formula 
+\[
+\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}=\arg\min_{u}\sum_{k=1}^{N}\rho(z_{k}-u),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\rho$
+\end_inset
+
+ – дважды дифференцируемая строго выпуклая функция с
+\begin_inset space ~
+\end_inset
+
+минимумом в
+\begin_inset space ~
+\end_inset
+
+нуле.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-среднее имеет частные производные:
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{M}_{\rho}}{\partial z_{k}}=\frac{\rho^{\prime\prime}(z_{k}-\bar{z}_{\rho})}{\rho^{\prime\prime}(z_{1}-\bar{z}_{\rho})+\cdots+\rho^{\prime\prime}(z_{N}-\bar{z}_{\rho})},
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\bar{z}_{\rho}=\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Например, если взять функцию 
+\begin_inset Formula $\rho(r)=\sqrt{\varepsilon^{2}+r^{2}}-\varepsilon$
+\end_inset
+
+, то при достаточно малых значениях 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ можно получить приближенный сглаженный вариант медианы.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Винзоризированное среднее
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Второй
+\emph default
+ способ основан на
+\begin_inset space ~
+\end_inset
+
+применении цензурированного среднего арифметического, в котором пороговое
+ значение оценивается при помощи сглаженного варианта 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-квантиля:
+\begin_inset Formula 
+\[
+\mathsf{WM}_{\rho,\alpha}\{z_{1},\dots,z_{N}\}=\frac{1}{N}\sum_{k=1}^{N}\min\{z_{k},\bar{z}_{\rho_{\alpha},}\},
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\rho(r)$
+\end_inset
+
+ – функция при которой 
+\begin_inset Formula $\mathsf{M}_{\rho}$
+\end_inset
+
+ выступает в
+\begin_inset space ~
+\end_inset
+
+качестве приближения медианы,
+\begin_inset Formula 
+\[
+\rho_{\alpha}(r)=\begin{cases}
+\alpha\rho(r), & \text{если}\ r>0\\
+\frac{1}{2}\bigl(\alpha\rho(0_{+})+(1-\alpha)\rho(0_{+})\bigr), & \text{если}\ r=0\\
+(1-\alpha)\rho(r), & \text{если}\ r<0
+\end{cases}
+\]
+
+\end_inset
+
+является функцией, для которой 
+\begin_inset Formula $\mathsf{M}_{\rho_{\alpha}}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ выступает в
+\begin_inset space ~
+\end_inset
+
+качестве приближения 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-квантиля.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Винзоризированное среднее
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Частные производные имеют вид:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{WM}_{\rho_{\alpha}}}{\partial z_{k}}=\begin{cases}
+{\displaystyle \frac{1}{N}+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial z_{k}}}, & \text{если}\ z_{k}<\bar{z}_{\rho_{\alpha}}\\
+\\
+{\displaystyle \frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial z_{k}}}, & \text{если}\ z_{k}\geqslant\bar{z}_{\rho_{\alpha}},
+\end{cases}
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $m$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– число значений 
+\begin_inset Formula $z_{k}\geqslant\bar{z}_{\rho_{\alpha}}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+В обоих случаях 
+\begin_inset Formula $\frac{\partial\mathsf{M}}{\partial z_{k}}\geqslant0$
+\end_inset
+
+ и 
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{M}}{\partial z_{1}}+\cdots+\frac{\partial\mathsf{M}}{\partial z_{N}}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Цензурированное среднее
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Третий способ основан на другом подходе.
+ Он использует усеченную квадратичную функцию:
+\begin_inset Formula 
+\[
+r_{c}^{2}=\begin{cases}
+r^{2}, & \text{если}\ |r|\leqslant c\\
+c^{2}, & \text{если}\ |r|>c.
+\end{cases}
+\]
+
+\end_inset
+
+С ее помощью определяется оценка среднего значения:
+\begin_inset Formula 
+\[
+\tilde{z}_{\alpha}=\mathsf{TM}_{\rho_{\alpha}}\{z_{1},\dots,z_{N}\}=\arg\min_{u}\Bigl\{\sum_{|z_{k}-u|\leqslant\bar{c}_{\alpha}}\!\!\!\!(z_{k}-u)^{2}+\sum_{|z_{k}-u|>\bar{c}_{\alpha}}\!\!\!\!\!\bar{c}_{\alpha}^{2}\Bigr\},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\bar{c}_{\alpha}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1},\dots,v_{N}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k}=(z_{k}-u)^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Рекуррентное соотношение для вычисления 
+\begin_inset Formula $\tilde{z}_{\alpha}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u_{t+1}=\frac{1}{N}\Bigl\{\sum_{|z_{k}-u_{t}|\leqslant\bar{c}_{\alpha,t}}\!\!\!\!\!(1+m\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k,t}})z_{k}+\sum_{|z_{k}-u_{t}|>\bar{c}_{\alpha,t}}\!\!\!\!\!m\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k,t}}z_{k}\Bigr\},
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\bar{c}_{\alpha,t}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1,t},\dots,v_{N,t}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k,t}=(z_{k}-u_{t})^{2}$
+\end_inset
+
+, 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $m$
+\end_inset
+
+ – число значений 
+\begin_inset Formula $z_{k}\colon|z_{k}-u_{t}|>\bar{c}_{\alpha,t}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Цензурированное среднее
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Выражение для цензурированного среднего:
+\begin_inset Formula 
+\[
+\tilde{z}_{\alpha}=\sum_{k=1}^{N}\gamma_{k}z_{k},
+\]
+
+\end_inset
+
+где
+\begin_inset Formula 
+\[
+\gamma_{k}=\begin{cases}
+{\displaystyle \frac{1}{N}+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k}},} & \text{если}\ |z_{k}-\tilde{z}_{\alpha}|\leqslant\bar{c}_{\alpha}\\
+\\
+{\displaystyle \frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k}},} & \text{если}\ |z_{k}-\tilde{z}_{\alpha}|>\bar{c}_{\alpha}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\bar{c}_{\alpha}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1},\dots,v_{N}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k}=(z_{k}-\tilde{z}_{\alpha})^{2}$
+\end_inset
+
+, 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $m$
+\end_inset
+
+ число значений 
+\begin_inset Formula $z_{k}\colon|z_{k}-\tilde{z}_{\alpha}|>\bar{c}_{\alpha}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Заметим, что
+\begin_inset Formula 
+\[
+\sum_{k=1}^{N}\gamma_{k}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Принцип минимизации дифференцируемых средних
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Таким образом, в
+\begin_inset space ~
+\end_inset
+
+условиях выбросов, предлагается искать 
+\begin_inset Formula $\mathbf{c}^{*}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}^{*}$
+\end_inset
+
+, минимизируя функционал
+\begin_inset Formula 
+\[
+\begin{array}{c}
+\mathcal{Q}(\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K})=\mathsf{M}\bigl\{ D(\mathbf{x}_{1};\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K}),\dots\\
+\dots,D(\mathbf{x}_{N};\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K})\bigl\}.
+\end{array}
+\]
+
+\end_inset
+
+В
+\begin_inset space ~
+\end_inset
+
+силу дифференцируемости 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ искомые центры 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ и матрицы 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+ являются решением системы нелинейных уравнений:
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{lc}
+z_{k}=D(\mathbf{x}_{k};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K}), & k=1,\dots,N\\
+\mathbf{v}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}\\
+\mathbf{c}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}}, & j=1,\dots,K\\
+\mathbf{S}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})}, & j=1,\dots,K
+\end{array}\right.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Принцип минимизации дифференцируемых средних
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Вектор весов 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+ при 
+\begin_inset Formula $\mathbf{c}_{j}=\mathbf{c}_{j}^{*}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}_{j}=\mathbf{S}_{j}^{*}$
+\end_inset
+
+ также можно использовать в
+\begin_inset space ~
+\end_inset
+
+качестве оценки значимости точек.
+\end_layout
+
+\begin_layout Standard
+Т.к.
+ 
+\begin_inset Formula $v_{1}+\cdots+v_{N}=1$
+\end_inset
+
+, то выбросам будут соответствовать точки с
+\begin_inset space ~
+\end_inset
+
+наименьшими значениями весов.
+\end_layout
+
+\begin_layout Standard
+Устойчивость по
+\begin_inset space ~
+\end_inset
+
+отношению к
+\begin_inset space ~
+\end_inset
+
+выбросам достигается за
+\begin_inset space ~
+\end_inset
+
+счет того, что веса точек, соответствующих выбросам, оказывается существенно
+ меньше, чем веса точек, не
+\begin_inset space ~
+\end_inset
+
+являющихся выбросами.
+ 
+\end_layout
+
+\begin_layout Standard
+Важно также то, величина веса точки убывает по
+\begin_inset space ~
+\end_inset
+
+мере роста модуля разности между 
+\begin_inset Formula $\bar{z}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ и 
+\begin_inset Formula $z_{k}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Такие свойства являются естественным следствием робастности оценок среднего
+ значения.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Алгоритм
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+На 
+\begin_inset Formula $t$
+\end_inset
+
+-ом шаге последовательно решаются два уравнения:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Для каждого 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+ решается векторное уравнение для нахождения 
+\begin_inset Formula $\mathbf{c}_{j,t+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathbf{c}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}}\mathbf{x}_{k},\quad V_{j}=\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}},
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $z_{k}=D(\mathbf{x}_{k};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1,t},\dots,\mathbf{S}_{K,t})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Для каждого 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+ решается матричное уравнение для нахождения 
+\begin_inset Formula $\mathbf{S}_{j,t+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathbf{S}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1}),\quad V_{j}=\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}},
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $z_{k}=D(\mathbf{x}_{k};\mathbf{c}_{1,t+1},\dots,\mathbf{c}_{K,t+1};\mathbf{S}_{1},\dots,\mathbf{S}_{K})$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Шаг 1 повторяется до тех пор, пока 
+\begin_inset Formula $t<T$
+\end_inset
+
+ (максимальное число итераций) или последовательность 
+\begin_inset Formula $\{\mathcal{Q}(\mathbf{c}_{t,1},\dots,\mathbf{c}_{t,K};\mathbf{S}_{t,1},\dots,\mathbf{S}_{t,K})\}$
+\end_inset
+
+ не
+\begin_inset space ~
+\end_inset
+
+сконцентрируется вокруг своей точки сгущения.
+\end_layout
+
+\begin_layout Standard
+
+\size small
+Дополнительное условие 
+\begin_inset Formula $|\mathbf{S}|=1$
+\end_inset
+
+ добавляется, чтобы предотвратить вырождение корреляционной матрицы.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Алгоритм
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Первое уравнение в системе имеет вид:
+\begin_inset Formula 
+\[
+\mathbf{c}=F(\mathbf{c}).
+\]
+
+\end_inset
+
+Для его решения можно использовать итерационную процедуру:
+\begin_inset Formula 
+\[
+\mathbf{c}_{t+1}=(1-h)\mathbf{c}_{t}+hF(\mathbf{c}_{t}),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $0\leqslant h\leqslant1.$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Второе уравнение имеет аналогичный вид:
+\begin_inset Formula 
+\[
+\mathbf{S}=G(\mathbf{S}).
+\]
+
+\end_inset
+
+Для его решения можно использовать аналогичную итерационную процедуру:
+\begin_inset Formula 
+\[
+\mathbf{S}_{t+1}=(1-h)\mathbf{S}_{t}+hG(\mathbf{S}_{t}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Пример: IRIS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align left
+\begin_inset Graphics
+	filename robust_kmeans_center_variance.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Белые маркеры соответствуют образцам с правильными классами, черные маркеры
+ соответствуют неправильным классам.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Пример: S1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s1.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Пример: S2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s2.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Пример: S3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s3.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Пример: S4
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s4.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout PlainFrame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+
+\series bold
+\size giant
+Благодарю за внимание!
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

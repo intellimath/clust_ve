@@ -1,0 +1,2206 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+%\IEEEoverridecommandlockouts
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package auto
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf2
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+title{Robust k-means method based on minimizing differentiable estimates
+ of mean, insensitive to outliers}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+author{...}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+author{
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockN{%
+\end_layout
+
+\begin_layout Plain Layout
+
+%1
+\backslash
+textsuperscript{st} Z.M.~Shibzukhov%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockA{
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Institute Mathematics and %Informatics}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Moscow Pedagogical State %Univercity}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%Moscow, Russia
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%szport@gmail.com%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockN{%
+\end_layout
+
+\begin_layout Plain Layout
+
+%2
+\backslash
+textsuperscript{nd} M.A.~Kazakov%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockA{%
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Institute Applied Mathematics and %Automation}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Kabardino-Balkarian Scientific %Center RAS}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%Nalchik, Russia
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%micro7777@mail.ru%
+\end_layout
+
+\begin_layout Plain Layout
+
+%} 
+\backslash
+and
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockN{%
+\end_layout
+
+\begin_layout Plain Layout
+
+%3
+\backslash
+textsuperscript{rd} %D.P.~Dimitrichenko%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+IEEEauthorblockA{
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Institute Applied Mathematics and %Automation}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+textit{Kabardino-Balkarian Scientific %Center RAS}
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%Nalchik, Russia
+\backslash
+
+\backslash
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+%dimdp@rambler.ru%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}%
+\end_layout
+
+\begin_layout Plain Layout
+
+%}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+A new approach to constructing a variant of the k-means clustering algorithm
+ is proposed, in which the Mahalanobis distance is used instead of the Euclidean
+ distance.
+ It is based on minimizing differentiable estimates of the mean, insensitive
+ to outliers.
+ The examples show the possibility of stability of the proposed algorithm
+ with respect to outliers in the data.
+\end_layout
+
+\begin_layout Standard
+robust clustering, robust mean estimate, iteratively reweighted algorithm.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The problem of searching for cluster centers has been in the field of attention
+ of researchers for many years
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cp1,cp2,cp3"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The classical method for searching for centers and covariance matrices of
+ clusters can be based on solving the following minimization problem:
+\begin_inset Formula 
+\begin{equation}
+\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}=\arg\min_{\mathbf{c}_{1},\dots,\mathbf{c}_{K}}\frac{1}{N}\sum_{k=1}^{N}\min_{j=1,\dots,K}d(\mathbf{x}_{k};\mathbf{c}_{j},\mathbf{S}_{j}),\label{eq:km_s}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{c}_{1},\dots,\mathbf{c}_{K}$
+\end_inset
+
+ are cluster centers, 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+ are covariance matrices, 
+\begin_inset Formula 
+\[
+d(\mathbf{x};\mathbf{c},\mathbf{S})=\ln|\mathbf{S}|+(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})
+\]
+
+\end_inset
+
+is the square of the Mahalanobis distance with the covariance matrix 
+\begin_inset Formula $\mathbf{S}$
+\end_inset
+
+ between the points 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{c}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This statement of the problem is based on the assumption that the points
+ of the 
+\begin_inset Formula $j$
+\end_inset
+
+-th cluster obey a multidimensional normal distribution with a density
+\begin_inset Formula 
+\[
+p(\mathbf{x};\mathbf{c},\mathbf{S})\propto\frac{1}{\sqrt{|\mathbf{S}|}}e^{-\frac{1}{2}(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})},
+\]
+
+\end_inset
+
+an arbitrary point 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ refers to the cluster with the number
+\begin_inset Formula 
+\[
+j(\mathbf{x})=\arg\max_{j=1,\dots,K}p(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is reduced to solving systems of equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{l}
+\mathbf{c}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})},
+\end{array}\right.\label{eq:c_S_classic}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{I}_{j}\subset\{1,\dots,N\}$
+\end_inset
+
+ are indices of points falling into the 
+\begin_inset Formula $j$
+\end_inset
+
+-th cluster.
+\end_layout
+
+\begin_layout Standard
+The following iterative procedure underlies the extended 
+\family sans
+k-means
+\family default
+ algorithm:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{l}
+\mathbf{c}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}(\mathbf{x}_{k}-\mathbf{c}_{j,t})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t})},
+\end{array}\right.\label{eq:kmeans_alg}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{I}_{j,t}$
+\end_inset
+
+ are indices of points falling into the 
+\begin_inset Formula $j$
+\end_inset
+
+-th cluster at the 
+\begin_inset Formula $t$
+\end_inset
+
+-th step.
+ Initial values of cluster centers 
+\begin_inset Formula $\mathbf{c}_{1,0},\dots,\mathbf{c}_{K,0}$
+\end_inset
+
+ and covariance matrices 
+\begin_inset Formula $\mathbf{S}_{1,0},\dots,\mathbf{S}_{K,0}$
+\end_inset
+
+ are set before the iteration procedure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:kmeans_alg"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A significant distortion of the results of the algorithm may appear if the
+ empirical distribution 
+\begin_inset Formula $\{D(\mathbf{x}_{1}),\dots,D(\mathbf{x}_{N})\}$
+\end_inset
+
+, where
+\begin_inset Formula 
+\begin{multline*}
+D(\mathbf{x})=D(\mathbf{x};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\\
+\min_{j=1,\dots,K}d(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}),
+\end{multline*}
+
+\end_inset
+
+contains oitliers.
+\end_layout
+
+\begin_layout Section
+The classic method of overcoming the effects of outliers
+\end_layout
+
+\begin_layout Standard
+The classical method for solving the problem of emissions is based on the
+ replacement of the function 
+\begin_inset Formula $d(\mathbf{x};\mathbf{c},\mathbf{S})$
+\end_inset
+
+ with
+\begin_inset Formula 
+\[
+d_{\varrho}(\mathbf{x};\mathbf{c},\mathbf{S})=\ln|\mathbf{S}|+\varrho\bigl((\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})\bigr),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\varrho(r)$
+\end_inset
+
+ is a function to suppress the effects of outliers.
+ It corresponds to the probability distribution of points with density
+\begin_inset Formula 
+\[
+p(\mathbf{x};\mathbf{c},\mathbf{S})\propto\frac{1}{\sqrt{|\mathbf{S}|}}e^{-\frac{1}{2}\varrho\bigl((\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})\bigr)}.
+\]
+
+\end_inset
+
+The optimization task has the form:
+\begin_inset Formula 
+\begin{equation}
+\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}=\arg\min_{\mathbf{c}_{1},\dots,\mathbf{c}_{K}}\frac{1}{N}\sum_{k=1}^{N}D_{\varrho}(\mathbf{x}_{k}),\label{eq:km_s_rho}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\begin{multline*}
+D_{\varrho}(\mathbf{x})=D_{\varrho}(\mathbf{x};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K})=\\
+\min_{j=1,\dots,K}d_{\varrho}(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\end{multline*}
+
+\end_inset
+
+The 
+\begin_inset Formula $\varrho$
+\end_inset
+
+ function is introduced in order to achieve a relative decrease in the "large"
+ values of the square of the Mahalanobis function.
+ An example is the function 
+\begin_inset Formula $\varrho(r)=H(\sqrt{r})$
+\end_inset
+
+, where 
+\begin_inset Formula $H$
+\end_inset
+
+ is the Huber function:
+\begin_inset Formula 
+\[
+H(r)=\begin{cases}
+\frac{1}{2}r^{2}, & \text{if}\ r\leqslant c\\
+rc-\frac{1}{2}c^{2}, & \text{if}\ r<c.
+\end{cases}
+\]
+
+\end_inset
+
+Along with the Huber function, you can also use the function 
+\begin_inset Formula $S(r)=\sqrt{c^{2}+r^{2}}-c$
+\end_inset
+
+, which, unlike it, has a continuous 
+\begin_inset Formula $2^{\text{nd}}$
+\end_inset
+
+-order derivative.
+\end_layout
+
+\begin_layout Standard
+The problem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s_rho"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be reduced to solving a system of equations:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{lc}
+\mathbf{c}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}, & V_{j}=\sum\limits _{k\in\mathbf{I}_{j}}v_{k}\\
+\mathbf{S}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j}),
+\end{array}\right.\label{eq:c_S_rho_eq}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $v_{k}=\psi\bigl(D_{\varrho}(\mathbf{x}_{k})\bigr)$
+\end_inset
+
+, 
+\begin_inset Formula $\psi(r)=\varrho^{\prime}(r)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the solution to be unique, it is necessary that 
+\begin_inset Formula $\varrho^{\prime}(r)$
+\end_inset
+
+ be non-decreasing.
+ But it follows from this that it is enough to make outliers of the order
+ 
+\begin_inset Formula $\nicefrac{1}{n+1}$
+\end_inset
+
+-th part of the set of points in order to break the robustness of such a
+ method
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mar1976"
+literal "false"
+
+\end_inset
+
+.
+ Nevertheless, if the matrices 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+ are given, then the problem of finding the centers 
+\begin_inset Formula $\mathbf{c}_{1},\dots,\mathbf{c}_{K}$
+\end_inset
+
+ is robust.
+ The loss of robustness is precisely connected with the evaluation of the
+ matrices 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A fairly comprehensive overview of other methods can be found in
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rus2013,Mar2015"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+The principle of minimizing differentiable averages, insensitive to outliers
+\end_layout
+
+\begin_layout Standard
+In this paper, we propose a new approach based on replacing the arithmetic
+ mean in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with a robust differentiable mean estimate of 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+, which will be insensitive to outliers.
+ Such a replacement will allow, at the level of the mathematical formulation
+ of the problem, to lay the foundation for the stability of the solution
+ of the problem.
+ This is precisely the novelty of the proposed approach.
+ Since the empirical distribution of the squares of the distances of the
+ Mahalanobis from the points to the center of the nearest cluster may contain
+ outliers, so the arithmetic mean value turns out to be distorted.
+ As a consequence of this, the positions of the centers of the clusters
+ may be displaced.
+ The use of an outliers-insensitive average estimate can avoid distortion.
+\end_layout
+
+\begin_layout Standard
+The differentiability of the estimate of the average value, insensitive
+ to outliers, allows the use of gradient minimization algorithms to search
+ for cluster centers.
+\end_layout
+
+\begin_layout Standard
+Thus, in terms of outliers, it is proposed to search for 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+, minimizing the functional
+\begin_inset Formula 
+\begin{gather*}
+\mathcal{Q}(\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K})=\\
+\mathsf{M}\bigl\{ D_{1}(\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K}),\dots,D_{N}(\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K})\bigl\},
+\end{gather*}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+D_{k}(\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K})=D(\mathbf{x}_{k};\mathbf{c}_{1},...,\mathbf{c}_{K};\mathbf{S}_{1},...,\mathbf{S}_{K}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Due to differentiability of 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ the desired centers 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ and the matrices 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+ are the solutions of the system of nonlinear equations:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{lc}
+z_{k}=D_{k}(\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K}), & k=1,\dots,N\\
+\mathbf{v}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}\\
+\mathbf{c}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}}, & j=1,\dots,K\\
+\mathbf{S}_{j}=\frac{1}{|\mathbf{I}_{j}|}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})}, & j=1,\dots,K
+\end{array}\right.\label{eq:eq_c_S}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The vector of sample weights 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathbf{c}_{j}=\mathbf{c}_{j}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{S}_{j}=\mathbf{S}_{j}^{*}$
+\end_inset
+
+ can also be used as an estimate of the significance of points.
+ Since 
+\begin_inset Formula $v_{1}+\cdots+v_{N}=1$
+\end_inset
+
+, the outliers will correspond to the points with the lowest values of the
+ weights.
+\end_layout
+
+\begin_layout Standard
+Stability with respect to outliers is achieved due to the fact that the
+ weights of the points corresponding to outliers are significantly less
+ than the weights of the points that are not outliers.
+ It is also important that the point weight decreases as the absolute value
+ of the difference between 
+\begin_inset Formula $\bar{z}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ and 
+\begin_inset Formula $z_{k}$
+\end_inset
+
+ increases.
+ Such properties are a natural consequence of the robustness of mean estimates.
+ 
+\end_layout
+
+\begin_layout Section
+Outliers insensitive average estimates
+\end_layout
+
+\begin_layout Standard
+Such estimates can be constructed in at least two ways.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The
+\begin_inset space ~
+\end_inset
+
+first
+\emph default
+ method is based on the approximation of the median based on the 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-mean 
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sz2017,sz2019"
+literal "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}=\arg\min_{u}\sum_{k=1}^{N}\rho(z_{k}-u),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is twice differentiable strictly convex function with a minimum at zero.
+ The 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-mean defined in this way has partial derivatives:
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{M}_{\rho}}{\partial z_{k}}=\frac{\rho^{\prime\prime}(z_{k}-\bar{z}_{\rho})}{\rho^{\prime\prime}(z_{1}-\bar{z}_{\rho})+\cdots+\rho^{\prime\prime}(z_{N}-\bar{z}_{\rho})},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\bar{z}_{\rho}=\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For example, if you take the function 
+\begin_inset Formula $\rho(r)=\sqrt{\varepsilon^{2}+r^{2}}-\varepsilon$
+\end_inset
+
+, then for sufficiently small values 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+, you can get an approximate and smoothed version of the median.
+ Choosing a sufficiently small value of 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, we can ensure that the value 
+\begin_inset Formula $\partial\mathsf{M}_{\rho}/\partial z_{k}$
+\end_inset
+
+ is negligible for those values 
+\begin_inset Formula $z_{k}$
+\end_inset
+
+ that are far from the average value 
+\begin_inset Formula $\bar{z}_{\rho}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Smoothed variant of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantile can be built based on the function
+\begin_inset Formula 
+\begin{equation}
+\rho_{\alpha}(r)=\begin{cases}
+\alpha\rho(r), & \text{if}\ r>0\\
+\frac{1}{2}\bigl(\alpha\rho(0_{+})+(1-\alpha)\rho(0_{+})\bigr), & \text{if}\ r=0\\
+(1-\alpha)\rho(r), & \text{if}\ r<0,
+\end{cases}\label{eq:rho_a}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\rho(r)$
+\end_inset
+
+ is a function for smoothed variant of median.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The second
+\emph default
+ method is based on the use of a censored arithmetic mean, in which the
+ threshold value is estimated using a smoothed version of the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-quantile:
+\begin_inset Formula 
+\begin{equation}
+\mathsf{WM}_{\rho,\alpha}\{z_{1},\dots,z_{N}\}=\frac{1}{N}\sum_{k=1}^{N}\min\{z_{k},\bar{z}_{\rho_{\alpha}}\}.\label{eq:win_mean}
+\end{equation}
+
+\end_inset
+
+Partial derivatives are of the form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{WM}_{\rho_{\alpha}}}{\partial z_{k}}=\begin{cases}
+\frac{1}{N}+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial z_{k}}, & \text{if}\ z_{k}<\bar{z}_{\rho_{\alpha}}\\
+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial z_{k}}, & \text{if}\ z_{k}\geqslant\bar{z}_{\rho_{\alpha}},
+\end{cases}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $m$
+\end_inset
+
+ is equal to the number of 
+\begin_inset Formula $z_{k}\geqslant\bar{z}_{\rho_{\alpha}}$
+\end_inset
+
+.
+ In both cases 
+\begin_inset Formula $\frac{\partial\mathsf{M}}{\partial z_{k}}\geqslant0$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{M}}{\partial z_{1}}+\cdots+\frac{\partial\mathsf{M}}{\partial z_{N}}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The third
+\emph default
+ method takes a different approach to censoring values.
+ Let's define a truncated version of a
+\begin_inset space ~
+\end_inset
+
+quadratic function:
+\begin_inset Formula 
+\[
+r_{c}^{2}=\begin{cases}
+r^{2}, & \text{if}\ |r|\leqslant c\\
+c^{2}, & \text{if}\ |r|>c.
+\end{cases}
+\]
+
+\end_inset
+
+With its help we define
+\begin_inset Formula 
+\begin{multline*}
+\tilde{z}_{\alpha}=\mathsf{TM}_{\rho_{\alpha}}\{z_{1},\dots,z_{N}\}=\\
+\arg\min_{u}\Bigl\{\sum_{|z_{k}-u|\leqslant\bar{c}_{\alpha}}\!\!\!\!(z_{k}-u)^{2}+\sum_{|z_{k}-u|>\bar{c}_{\alpha}}\!\!\!\!\!\bar{c}_{\alpha}^{2}\Bigr\},
+\end{multline*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\bar{c}_{\alpha}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1},\dots,v_{N}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k}=(z_{k}-u)^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From the definition we get a recurrence relation for calculating 
+\begin_inset Formula $\tilde{z}_{\alpha}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u_{t+1}=\sum_{|z_{k}-u_{t}|\leqslant\bar{c}_{\alpha,t}}\!\!\!\!\!\Bigl(\frac{1}{N}+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k,t}}\Bigr)z_{k}+\!\!\!\sum_{|z_{k}-u_{t}|>\bar{c}_{\alpha,t}}\!\!\!\!\!\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k,t}}z_{k},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\bar{c}_{\alpha,t}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1,t},\dots,v_{N,t}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k,t}=(z_{k}-u_{t})^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $m$
+\end_inset
+
+ is the number of values 
+\begin_inset Formula $z_{k}\colon|z_{k}-u_{t}|>\bar{c}_{\alpha,t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the limit, we obtain the weighted arithmetic mean:
+\begin_inset Formula 
+\[
+\tilde{z}_{\alpha}=\sum_{k=1}^{N}v_{k}z_{k},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+v_{k}=\begin{cases}
+{\displaystyle {\displaystyle \frac{1}{N}+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k}}}}, & \text{if}\ |z_{k}-\tilde{z}_{\alpha}|\leqslant\bar{c}_{\alpha}\\
+{\displaystyle {\displaystyle \frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial v_{k}}}}, & \text{if}\ |z_{k}-\tilde{z}_{\alpha}|>\bar{c}_{\alpha},
+\end{cases}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $\bar{c}_{\alpha}^{2}=\mathsf{M}_{\rho_{\alpha}}\{v_{1},\dots,v_{N}\}$
+\end_inset
+
+, 
+\begin_inset Formula $v_{k}=(z_{k}-\tilde{z}_{\alpha})^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $m$
+\end_inset
+
+ is the number of values 
+\begin_inset Formula $z_{k}\colon|z_{k}-\tilde{z}_{\alpha}|>\bar{c}_{\alpha}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\sum_{k=1}^{N}v_{k}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this situation the system of equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq_c_S"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ should be rewrited as follow
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{lc}
+z_{k}=D_{k}(\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1},\dots,\mathbf{S}_{K}), & k=1,\dots,N\\
+\mathbf{c}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}}, & j=1,\dots,K\\
+\mathbf{S}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})}, & j=1,\dots,K,
+\end{array}\right.
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+G_{j}=\sum\limits _{k\in\mathbf{I}_{j}}\gamma_{k}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align left
+\begin_inset Graphics
+	filename robust_kmeans_center_variance.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:iris"
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+IRIS
+\family default
+: Robust vs.
+ regular algorithm.
+ White markers correspond to samples with the correct classes, black markers
+ correspond to the wrong classes.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The algorithm
+\end_layout
+
+\begin_layout Standard
+To search 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+ we apply an iterative scheme that corresponds to the analog of the Jacobi
+ method for solving the system of nonlinear equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq_c_S"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The initial positions of the centers are selected in some way, for example:
+ 
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{l}
+\mathbf{c}_{j,0}={\displaystyle \frac{1}{N}\sum\limits _{k=1}^{N}\mathbf{x}_{k}}\\
+\mathbf{S}_{j,0}=\mathbf{E}^{n\times n},
+\end{array}\right.
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{E}^{n\times n}$
+\end_inset
+
+ is identity matrix 
+\begin_inset Formula $n\times n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+At the 
+\begin_inset Formula $t$
+\end_inset
+
+-th step, two equations are successively solved:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+For each 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+, the following vector equation is first solved to find
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\mathbf{c}_{j,t+1}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{equation}
+\mathbf{c}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k},\label{eq:eq_c}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $z_{k}=D_{k}(\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1,t},\dots,\mathbf{S}_{K,t})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Then, for each 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+, the following vector equation is solved to find
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\mathbf{S}_{j,t+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\mathbf{S}_{j}=\frac{1}{V_{j}}\sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1}),\label{eq:eq_S}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $z_{k}=D_{k}(\mathbf{c}_{1,t+1},\dots,\mathbf{c}_{K,t+1};\mathbf{S}_{1},\dots,\mathbf{S}_{K})$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Step 1 is repeated until 
+\begin_inset Formula $t<T$
+\end_inset
+
+ (maximum number of iterations) or the sequence 
+\begin_inset Formula $\{\mathcal{Q}(\mathbf{c}_{t,1},\dots,\mathbf{c}_{t,K};\mathbf{S}_{t,1},\dots,\mathbf{S}_{t,K})\}$
+\end_inset
+
+ will not concentrate around its condensation point.
+\end_layout
+
+\begin_layout Standard
+The sets of point indices 
+\begin_inset Formula $\mathbf{I}_{1},\dots,\mathbf{I}_{K}$
+\end_inset
+
+ corresponding to the partition into clusters are found before solving systems
+ of equations.
+ An additional condition 
+\begin_inset Formula $|\mathbf{S}|=1$
+\end_inset
+
+ is usually added to prevent singularity of the covariance matrices.
+ Scale factor 
+\begin_inset Formula $\sigma=|\mathbf{S}|$
+\end_inset
+
+ can then be estimated using the 
+\begin_inset Formula $\mathsf{S}$
+\end_inset
+
+-estimator
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Dav1987"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The first equation in the system has the form:
+\begin_inset Formula 
+\[
+\mathbf{c}=F(\mathbf{c}).
+\]
+
+\end_inset
+
+To solve it, you can use the iterative procedure:
+\begin_inset Formula 
+\[
+\mathbf{c}_{t+1}=(1-h)\mathbf{c}_{t}+hF(\mathbf{c}_{t}),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $0\leqslant h\leqslant1.$
+\end_inset
+
+ The second equation has a similar form:
+\begin_inset Formula 
+\[
+\mathbf{S}=G(\mathbf{S}).
+\]
+
+\end_inset
+
+To solve it, you can use a similar iterative procedure:
+\begin_inset Formula 
+\[
+\mathbf{S}_{t+1}=(1-h)\mathbf{S}_{t}+hG(\mathbf{S}_{t}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Examples
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s1.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S
+\family default
+1: The results of robust and classical algorithms.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:s1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s2.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S
+\family default
+2: The results of robust and classical algorithms.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s3.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S
+\family default
+3: The results of robust and classical algorithms.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename robust_kmeans_center_variance_s4.eps
+	lyxscale 75
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S
+\family default
+4: The results of robust and classical algorithms.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:s4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+IRIS dataset
+\end_layout
+
+\begin_layout Standard
+Consider the relatively simple and classic 
+\family sans
+IRIS
+\family default
+ dataset (3 classes, 4 attributes, 150 items).
+ Here we use data in projection on 1st and 2nd principial components.
+ As a rule, it is used for classification tasks.
+ Here we will try to identify classes using clustering, using the Mahalanobis
+ distance instead of Euclidean.
+ Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:iris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the results of clustering using the robust algorithm proposed here
+ and the classical algorithm.
+ The result of clustering using the robust algorithm (both using 
+\begin_inset Formula $\mathsf{WM}_{\rho_{\alpha}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathsf{TM}_{\rho_{\alpha}}$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon=0.001$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha=0.96$
+\end_inset
+
+) differs from the given classification only at 
+\begin_inset Formula $3$
+\end_inset
+
+ points out of 
+\begin_inset Formula $150$
+\end_inset
+
+.
+ The result of clustering using the classical algorithm differs from the
+ given classification in no less than 6 points out of 150.
+ For comparison, the classic 
+\family sans
+kmeans
+\family default
+ with Euclidean distance differs from the given classification at 
+\begin_inset Formula $17$
+\end_inset
+
+ points out of 
+\begin_inset Formula $150$
+\end_inset
+
+.
+ This simple example shows that the application of the proposed robust approach
+ to clustering based on a realistic set of features can allow us to construct
+ a partition that differs slightly from a given classification.
+\end_layout
+
+\begin_layout Subsection
+Wine dataset
+\end_layout
+
+\begin_layout Standard
+Consider another classic 
+\family sans
+WINE
+\family default
+ dataset (3 classes, 13 attributes, 178 items).
+ As a rule, it is also used for classification tasks.
+ Here we will also try to identify classes using clustering, using the Mahalanob
+is distance instead of Euclidean.
+ The result of clustering using the robust algorithm (both using 
+\begin_inset Formula $\mathsf{WM}_{\rho_{\alpha}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathsf{TM}_{\rho_{\alpha}}$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon=0.001$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha=0.97$
+\end_inset
+
+) differs from the given classification only at 3–4 points out of 178.
+ The result of clustering using the classical algorithm differs from the
+ given classification in no less than 6–7 points out of 178.
+ This simple example shows that the application of the proposed robust approach
+ to clustering based on a realistic set of features can allow us to construct
+ a partition that differs slightly from a given classification.
+\end_layout
+
+\begin_layout Subsection
+S1–S4 datasets
+\end_layout
+
+\begin_layout Standard
+Cosider datasets 
+\family sans
+S1–S4
+\family default
+ for clustering from
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SD2018,sdataset"
+literal "false"
+
+\end_inset
+
+.
+ They contain 5000 points, 15 clusters.
+ In Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:s1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:s4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the results of clustering for sets 
+\family sans
+S1–S4
+\family default
+, respectively.
+ On each figure, on the left side there is the result of the robust algorithm,
+ and on the right side there is the classical one.
+ During the training, a robust mean estimate was used with 
+\begin_inset Formula $\mathsf{TM}_{\rho_{\alpha}}$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon=0.001$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha=0.96-0.97$
+\end_inset
+
+, 
+\begin_inset Formula $h=0.95$
+\end_inset
+
+.
+ It is easy to see that the robust algorithm allows one to find more adequate
+ positions of the centers of clusters and the shape of the variance matrices
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+In this paper, we considered a new variant of the 
+\family sans
+k-means
+\family default
+ algorithm, in which the Mahalanobis distance was used instead of the Euclidean
+ distance.
+ The proposed new approach to constructing a robust version of k-means algorithm
+ with the Mahalanobis distance bases on minimizing robust differentiable
+ estimates of the mean.
+ Its fundamental resistance ability to strong distortions in data was shown
+ compared with the classical k-means algorithm.
+ This is due to the fact that the robust average estimates used in the work
+ limit the influence on the search for the position of the centers of clusters
+ of points that are located at relatively large distances from them.
+ The differentiability of the estimate of the average value, insensitive
+ to outliers, allows the use of gradient minimization algorithms to search
+ for cluster centers.
+ Differentiability made it possible to construct an algorithm based on the
+ iterative reweighting method, so that at each step the centers of the clusters
+ are searched within the framework of the classical k-means with sample
+ weights.
+ Taking into account the shape of the covariance matrix significantly enhance
+ the result.
+ It should also be noted that the result of the robust algorithm is not
+ completely stable.
+ However, with a suitable choice of parameters 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+, it can be achieved that in most starts of the training procedure, an adequate
+ result can be obtained.
+\end_layout
+
+\begin_layout Subsection*
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+This work was supported by the RFBR grant No.
+ 18–01–00050.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cp1"
+literal "false"
+
+\end_inset
+
+V.V.
+\begin_inset space ~
+\end_inset
+
+Tatarnikov, I.A.
+\begin_inset space ~
+\end_inset
+
+Pestunov and V.B.
+\begin_inset space ~
+\end_inset
+
+Berikov, 
+\begin_inset Quotes eld
+\end_inset
+
+Centroid Averaging Algorithm for Building a Cluster Ensemble
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Computer Optics.
+ vol.
+ 41 (5), pp.
+ 712–718, 2017.
+ DOI: 10.18287/2412-6179-2017-41-5-712-718.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cp2"
+literal "false"
+
+\end_inset
+
+A.K.
+\begin_inset space ~
+\end_inset
+
+Jain, 
+\begin_inset Quotes eld
+\end_inset
+
+Data clustering: 50 years beyond K-means
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Pattern Recognition Letters.
+ vol.
+ 31 (8), pp.
+ 651-666, 2010.
+ DOI: 10.1016/j.patrec.2009.09.011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cp3"
+literal "false"
+
+\end_inset
+
+S.
+\begin_inset space ~
+\end_inset
+
+Belim and P.
+\begin_inset space ~
+\end_inset
+
+Kutlunin, 
+\begin_inset Quotes eld
+\end_inset
+
+Boundary extraction in images using a clustering algorithm
+\begin_inset Quotes erd
+\end_inset
+
+ [In Russian].
+ Computer Optics.
+ vol.
+ 39 (1), pp.
+ 119–124, 2015.
+ DOI: 10.18287/0134-2452-2015-39-1-119-124.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Mar1976"
+literal "false"
+
+\end_inset
+
+R.A.
+\begin_inset space ~
+\end_inset
+
+Maronna, 
+\begin_inset Quotes eld
+\end_inset
+
+Robust M-Estimators of Multivariate Location and Scatter
+\begin_inset Quotes erd
+\end_inset
+
+, Ann.
+ Statist, vol.
+ 4, pp.51–67, 1976.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Rus2013"
+literal "false"
+
+\end_inset
+
+P.
+\begin_inset space ~
+\end_inset
+
+Rousseeuw, M.
+\begin_inset space ~
+\end_inset
+
+Hubert, 
+\begin_inset Quotes eld
+\end_inset
+
+High-breakdown estimators of multivariate location and scatter
+\begin_inset Quotes erd
+\end_inset
+
+, In: Robustness and Complex Data Structures.
+ Ed.: C.
+\begin_inset space ~
+\end_inset
+
+Becker, R.
+\begin_inset space ~
+\end_inset
+
+Fried, S.
+\begin_inset space ~
+\end_inset
+
+Kuhnt., Springer, pp.
+ 49–66, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Mar2015"
+literal "false"
+
+\end_inset
+
+R.A.
+\begin_inset space ~
+\end_inset
+
+Maronna, V.J.
+\begin_inset space ~
+\end_inset
+
+Yohai, 
+\begin_inset Quotes eld
+\end_inset
+
+Robust and efficient estimation of multivariate scatter and location
+\begin_inset Quotes erd
+\end_inset
+
+.
+ [Online].
+ Available: arxiv:1504.03389, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sz2017"
+literal "false"
+
+\end_inset
+
+Z.M.
+\begin_inset space ~
+\end_inset
+
+Shibzukhov, 
+\begin_inset Quotes eld
+\end_inset
+
+On the principle of empirical risk minimization based on averaging aggregation
+ functions
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Dokl.
+ Math., vol.
+ 96 (3), pp.
+ 494–497, 2017.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://doi.org/10.1134/S106456241705026X"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sz2019"
+literal "false"
+
+\end_inset
+
+Z.M.
+\begin_inset space ~
+\end_inset
+
+Shibzukhov, M.A.
+\begin_inset space ~
+\end_inset
+
+Kazakov, 
+\begin_inset Quotes eld
+\end_inset
+
+Clustering based on the principle of finding centers and robust averaging
+ functions of aggregation
+\begin_inset Quotes erd
+\end_inset
+
+, Proceedings of V International Conference Information Technology and Nanotechn
+ology – ITNT
+\begin_inset space ~
+\end_inset
+
+2019.
+ Journal of Physics: Conference Series.
+ [Online].
+ Avaliable: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://iopscience.iop.org/article/10.1088/1742-6596/1368/5/052010/pdf"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Dav1987"
+literal "false"
+
+\end_inset
+
+P.L.
+\begin_inset space ~
+\end_inset
+
+Davies, 
+\begin_inset Quotes eld
+\end_inset
+
+Asymptotic behavior of S-estimates of multivariate location parameters and
+ dispersion matrices
+\begin_inset Quotes erd
+\end_inset
+
+, Ann.
+ Statist, vol.
+ 15, pp.
+ 1269–1292, 1987.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "SD2018"
+literal "false"
+
+\end_inset
+
+P.
+\begin_inset space ~
+\end_inset
+
+Fränti, S.
+\begin_inset space ~
+\end_inset
+
+Sieranoja, 
+\begin_inset Quotes eld
+\end_inset
+
+K-means properties on six clustering benchmark datasets
+\begin_inset Quotes erd
+\end_inset
+
+, Applied Intelligence, vol.
+ 48 (12), pp.
+ 4743–4759, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sdataset"
+literal "false"
+
+\end_inset
+
+Clustering basic benchmark.
+ [Online].
+ Available: http://cs.joensuu.fi/sipu/datasets/
+\end_layout
+
+\end_body
+\end_document

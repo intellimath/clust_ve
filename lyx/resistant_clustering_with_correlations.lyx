@@ -1,0 +1,2055 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+
+\usepackage{160-240}
+%\usepackage{myruss}
+\usepackage{ruslist}
+
+\usepackage{mymath}
+\setmathcolor{red!80!black}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language russian
+\language_package auto
+\inputencoding utf8
+\fontencoding global
+\font_roman "cochineal" "default"
+\font_sans "cmbr" "default"
+\font_typewriter "default" "default"
+\font_math "cochineal-ntxm" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing double
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style russian
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\noindent
+Об
+\begin_inset space ~
+\end_inset
+
+одном робастном подходе к
+\begin_inset space ~
+\end_inset
+
+поиску центров кластеров
+\end_layout
+
+\begin_layout Author
+З.М.
+\begin_inset space ~
+\end_inset
+
+Шибзухов
+\begin_inset Formula $^{1,2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+\noindent
+\align left
+
+\emph on
+Московский физико-технический институт,
+\begin_inset Newline newline
+\end_inset
+
+Институт математики и информатики Московского педагогического государственного
+ университета
+\end_layout
+
+\begin_layout Abstract
+Предложен новый подход к построению варианта алгоритма кластеризации 
+\family sans
+k-means
+\family default
+, в
+\begin_inset space ~
+\end_inset
+
+котором вместо евклидова расстояния используется расстояние Махаланобиса.
+ Он основан на
+\begin_inset space ~
+\end_inset
+
+минимизации дифференцируемых оценок среднего значения, нечувстввительных
+ к
+\begin_inset space ~
+\end_inset
+
+выбросам.
+ На
+\begin_inset space ~
+\end_inset
+
+примерах показана возможность устойчивости предложенного алгоритма по
+\begin_inset space ~
+\end_inset
+
+отношению к
+\begin_inset space ~
+\end_inset
+
+выбросам в
+\begin_inset space ~
+\end_inset
+
+данных.
+\end_layout
+
+\begin_layout Section*
+Введение
+\end_layout
+
+\begin_layout Standard
+Задача кластеризации является одной классических задача машинного обучения.
+ В
+\begin_inset space ~
+\end_inset
+
+основе многих методов кластеризации лежит идея поиска центров кластеров.
+ Если центры кластеров известны, то разбиение осуществляется по
+\begin_inset space ~
+\end_inset
+
+простому правилу: точка относится к
+\begin_inset space ~
+\end_inset
+
+тому кластеру, до
+\begin_inset space ~
+\end_inset
+
+центра которого расстояние минимально в
+\begin_inset space ~
+\end_inset
+
+определенном смысле.
+ В
+\begin_inset space ~
+\end_inset
+
+настоящей статье будем использовать расстояние Махаланобиса 
+\begin_inset Formula $\rho(\mathbf{x},\mathbf{y};\mathbf{S})=(\mathbf{x}-\mathbf{y})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{y})$
+\end_inset
+
+, где 
+\begin_inset Formula $\mathbf{S}$
+\end_inset
+
+ – корелляционная матрица.
+ Так что, каждый кластер характеризуется своим центром и своей корелляционной
+ матрицей.
+ 
+\end_layout
+
+\begin_layout Standard
+Пусть задано конечное множество точек 
+\begin_inset Formula $\mathbf{X}=\{\mathbf{x}_{1},\dots,\mathbf{x}_{N}\}\subset\mathbb{R}^{n}$
+\end_inset
+
+, которое необходимо разбить на
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $K$
+\end_inset
+
+ кластеров путем поиска центров кластеров 
+\begin_inset Formula $\mathbf{c}_{1},\dots,\mathbf{c}_{K}$
+\end_inset
+
+ и, соответствующих им, корреляционных матриц 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Классический метод поиска центров и корреляционных матриц кластеров можно
+ рассматривать как решениие следующей задачи минимизации:
+\begin_inset Formula 
+\begin{equation}
+\{\mathbf{c}_{j}^{*}\},\{\mathbf{S}_{j}^{*}\}=\arg\min_{\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\}}\frac{1}{N}\sum_{k=1}^{N}\min_{j=1,\dots,K}d(\mathbf{x}_{k};\mathbf{c}_{j},\mathbf{S}_{j}).\label{eq:km_s}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula 
+\[
+d(\mathbf{x};\mathbf{c},\mathbf{S})=\ln|\mathbf{S}|+(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})
+\]
+
+\end_inset
+
+– квадрат расстояния Махаланобиса с
+\begin_inset space ~
+\end_inset
+
+корреляционной матрицей 
+\begin_inset Formula $\mathbf{S}$
+\end_inset
+
+ между точками 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+и
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\mathbf{c}$
+\end_inset
+
+, 
+\begin_inset Formula $\{\mathbf{c}_{j}^{*}\}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– искомые центры кластеров, 
+\begin_inset Formula $\{\mathbf{S}_{j}^{*}\}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– искомые ковариационные матрицы, 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+, Для того, чтобы исключить вырождение ковариационных матриц 
+\begin_inset Formula $\mathbf{S}_{1},\dots,\mathbf{S}_{K}$
+\end_inset
+
+ накладываем дополнительное условие 
+\begin_inset Formula $|\mathbf{S}_{1}|=\cdots=|\mathbf{S}_{K}|=1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Такая постановка задачи основана на
+\begin_inset space ~
+\end_inset
+
+предположении о
+\begin_inset space ~
+\end_inset
+
+том, точки 
+\begin_inset Formula $j$
+\end_inset
+
+-ого кластера подчиняются многомерному нормальному распределению с
+\begin_inset space ~
+\end_inset
+
+плотностью
+\begin_inset Formula 
+\[
+p(\mathbf{x};\mathbf{c},\mathbf{S})\propto\frac{1}{\sqrt{|\mathbf{S}|}}e^{-\frac{1}{2}(\mathbf{x}-\mathbf{c})^{\prime}\mathbf{S}^{-1}(\mathbf{x}-\mathbf{c})},
+\]
+
+\end_inset
+
+а произвольная точка 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ относится к
+\begin_inset space ~
+\end_inset
+
+кластеру с
+\begin_inset space ~
+\end_inset
+
+номером
+\begin_inset Formula 
+\[
+j(\mathbf{x})=\arg\max_{j=1,\dots,K}p(\mathbf{x};\mathbf{c}_{j},\mathbf{S}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Задача 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ сводится к
+\begin_inset space ~
+\end_inset
+
+решению системы уравнений:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{l}
+\mathbf{c}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j}={\displaystyle \frac{1}{|\mathbf{I}_{j}|}\sum\limits _{k\in\mathbf{I}_{j}}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})},
+\end{array}\right.\label{eq:c_S_classic}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{I}_{j}\subset\{1,\dots,N\}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– индексы точек, попадающих в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $j$
+\end_inset
+
+-ый кластер.
+ 
+\end_layout
+
+\begin_layout Standard
+Итерационная процедура для поиска центров и ковариационных матриц имеет
+ вид:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{l}
+\mathbf{c}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}\mathbf{x}_{k}}\\
+\mathbf{S}_{j,t+1}={\displaystyle \frac{1}{|\mathbf{I}_{j,t}|}\sum\limits _{k\in\mathbf{I}_{j,t}}(\mathbf{x}_{k}-\mathbf{c}_{j,t})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t})},
+\end{array}\right.\label{eq:kmeans_alg}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{I}_{j,t}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– индексы точек, попадающих в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $j$
+\end_inset
+
+-ый кластер на
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $t$
+\end_inset
+
+-ом шаге.
+ Начальные значения 
+\begin_inset Formula $\mathbf{c}_{1,0},\dots,\mathbf{c}_{K,0}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}_{1,0},\dots,\mathbf{S}_{K,0}$
+\end_inset
+
+ задаются перед началом итерационной процедуры
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:kmeans_alg"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+В статье 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Teb07"
+literal "false"
+
+\end_inset
+
+ было предложено в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ вместо 
+\begin_inset Formula $\min$
+\end_inset
+
+ использовать сглаженные варианты на
+\begin_inset space ~
+\end_inset
+
+основе функции среднего по
+\begin_inset space ~
+\end_inset
+
+Колмогорову:
+\begin_inset Formula 
+\[
+F_{h_{s}}\{x_{1},\dots,x_{K}\}=h_{s}^{-1}\left\{ \frac{1}{K}\sum_{j=1}^{K}h_{s}(x_{j})\right\} ,
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $h_{s}\colon\mathbb{R}_{+}\to\mathbb{R}_{+}$
+\end_inset
+
+ – непрерывно-дифференцируемая строго монотонно убывающая неотрицательная
+ биективная функция.
+ При этом, 
+\begin_inset Formula 
+\[
+\lim_{s\to\infty}F_{h_{s}}\{x_{1},\dots,x_{K}\}=\min\{x_{1},\dots,x_{K}\}.
+\]
+
+\end_inset
+
+Например: 
+\end_layout
+
+\begin_layout Standard
+1) 
+\begin_inset Formula ${\displaystyle F_{e^{-sx}}\{x_{1},\dots,x_{K}\}=-\frac{1}{s}\ln\left\{ \frac{1}{K}\bigl(e^{-sx_{1}}+\cdots+e^{-sx_{K}}\bigr)\right\} }$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Standard
+2) 
+\begin_inset Formula ${\displaystyle F_{x^{-s}}\{x_{1},\dots,x_{K}\}=\left(\frac{1}{K}\left(x_{1}^{-s}+\cdots+x_{K}^{-s}\right)\right)^{-1/s}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Задача 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ принимает следующий вид:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\{\mathbf{c}_{j}^{*}\},\{\mathbf{S}_{j}^{*}\}=\arg\min_{\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\}}\frac{1}{N}\sum_{k=1}^{N}F_{h_{s}}\bigl\{ d(\mathbf{x}_{k};\mathbf{c}_{1},\mathbf{S}_{1}),\dots,d(\mathbf{x}_{k};\mathbf{c}_{K},\mathbf{S}_{K})\bigr\}.\label{eq:km_soft}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Существенное искажение результатов работы алгоритма может произойти, если
+ эмпирическое распределение 
+\begin_inset Formula $\{D(\mathbf{x}_{1}),\dots,D(\mathbf{x}_{N})\}$
+\end_inset
+
+, где
+\begin_inset Formula 
+\[
+D(\mathbf{x})=D(\mathbf{x};\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\})=F_{h_{s}}\bigl\{ d(\mathbf{x};\mathbf{c}_{1},\mathbf{S}_{1}),\dots,d(\mathbf{x};\mathbf{c}_{K},\mathbf{S}_{K})\bigr\},
+\]
+
+\end_inset
+
+содержит выбросы.
+ В
+\begin_inset space ~
+\end_inset
+
+этом случае оценка среднего значения посредством среднего арифметического
+ из-за своей чувствительности к
+\begin_inset space ~
+\end_inset
+
+выбросам может оказаться существенно искаженной.
+ Это в
+\begin_inset space ~
+\end_inset
+
+свою очередь может привести к
+\begin_inset space ~
+\end_inset
+
+искажению значений 
+\begin_inset Formula $\{\mathbf{c}_{j}^{*}\},\{\mathbf{S}_{j}^{*}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Оценки среднего, нечувствительные к выбросам
+\end_layout
+
+\begin_layout Standard
+В
+\begin_inset space ~
+\end_inset
+
+настоящей работе предлагается новый подход, основанный на
+\begin_inset space ~
+\end_inset
+
+замене среднего арифметического в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:km_s"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ на
+\begin_inset space ~
+\end_inset
+
+робастную дифференцируемую оценку среднего 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+, которая будет нечувствительной к
+\begin_inset space ~
+\end_inset
+
+выбросам.
+ Такая замена позволит на
+\begin_inset space ~
+\end_inset
+
+уровне математической постановки задачи заложить фундамент устойчивости
+ решения задачи.
+\end_layout
+
+\begin_layout Standard
+Такие оценки можно построить, как минимум, двумя способами.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Первый
+\emph default
+ способ основан приближении медианы на базе 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-среднего
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sz2017,sz2019"
+literal "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}=\arg\min_{u}\sum_{k=1}^{N}\rho(z_{k}-u),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\rho$
+\end_inset
+
+ – дважды дифференцируемая строго выпуклая функция с
+\begin_inset space ~
+\end_inset
+
+минимумом в
+\begin_inset space ~
+\end_inset
+
+нуле.
+ Определенное таким образом 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-среднее имеет частные производные:
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{M}_{\rho}}{\partial z_{k}}=\frac{\rho^{\prime\prime}(z_{k}-\bar{z}_{\rho})}{\rho^{\prime\prime}(z_{1}-\bar{z}_{\rho})+\cdots+\rho^{\prime\prime}(z_{N}-\bar{z}_{\rho})},
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\bar{z}_{\rho}=\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Например, если взять функцию 
+\begin_inset Formula $\rho(r)=\sqrt{\varepsilon^{2}+r^{2}}-\varepsilon$
+\end_inset
+
+, то при достаточно малых значениях 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ можно получить приближенный и сглаженный вариант медианы.
+ Устойчивость 
+\begin_inset Formula $\mathsf{M}$
+\end_inset
+
+-средних, когда 
+\begin_inset Formula $|\rho^{\prime}(r)|$
+\end_inset
+
+ – ограничена вытекает из оценок, доказанных в
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hub09"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Второй
+\emph default
+ способ основан на
+\begin_inset space ~
+\end_inset
+
+применении цензурированного среднего арифметического, в котором пороговое
+ значение оценивается при помощи сглаженного варианта 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-квантиля:
+\begin_inset Formula 
+\begin{equation}
+\mathsf{WM}_{\rho,\alpha}\{z_{1},\dots,z_{N}\}=\frac{1}{N}\sum_{k=1}^{N}\min\{z_{k},\bar{z}_{\rho_{\alpha},}\},\label{eq:win_mean}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula $\rho(r)$
+\end_inset
+
+ – функция при которой 
+\begin_inset Formula $\mathsf{M}_{\rho}$
+\end_inset
+
+ выступает в
+\begin_inset space ~
+\end_inset
+
+качестве приближения медианы,
+\begin_inset Formula 
+\begin{equation}
+\rho_{\alpha}(r)=\begin{cases}
+\alpha\rho(r), & \text{если}\ r>0\\
+\frac{1}{2}\bigl(\alpha\rho(0_{+})+(1-\alpha)\rho(0_{+})\bigr), & \text{если}\ r=0\\
+(1-\alpha)\rho(r), & \text{если}\ r<0
+\end{cases}\label{eq:rho_a}
+\end{equation}
+
+\end_inset
+
+является функцией, для которой 
+\begin_inset Formula $\mathsf{M}_{\rho_{\alpha}}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ выступает в
+\begin_inset space ~
+\end_inset
+
+качестве приближения 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-квантиля.
+ 
+\end_layout
+
+\begin_layout Standard
+Частные производные имеют вид:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial\mathsf{WM}_{\rho_{\alpha}}}{\partial z_{k}}=\left(\frac{1}{N}\left[z_{k}<\bar{z}_{\rho_{\alpha}}\right]+\frac{m}{N}\frac{\partial\mathsf{M}_{\rho_{\alpha}}}{\partial z_{k}}\right),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $m$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– число значений 
+\begin_inset Formula $z_{k}\geqslant\bar{z}_{\rho_{\alpha}}$
+\end_inset
+
+.
+ В обоих случаях 
+\begin_inset Formula $\frac{\partial\mathsf{M}}{\partial z_{k}}\geqslant0$
+\end_inset
+
+ и 
+\begin_inset Formula $\frac{\partial\mathsf{M}}{\partial z_{1}}+\cdots+\frac{\partial\mathsf{M}}{\partial z_{N}}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Принцип минимизации дифференцируемых средних, нечувствительных к
+\begin_inset space ~
+\end_inset
+
+выбросам
+\end_layout
+
+\begin_layout Standard
+Таким образом, в
+\begin_inset space ~
+\end_inset
+
+условиях выбросов, предлагается искать 
+\begin_inset Formula $\mathbf{c}^{*}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}^{*}$
+\end_inset
+
+, минимизируя функционал
+\begin_inset Formula 
+\[
+\mathcal{Q}(\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\})=\mathsf{M}\bigl\{ D(\mathbf{x}_{1};\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\}),\dots,D(\mathbf{x}_{N};\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\})\bigl\}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+В
+\begin_inset space ~
+\end_inset
+
+силу дифференцируемости 
+\begin_inset Formula $\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ искомые центры 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ и матрицы 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+ являются решением системы нелинейных уравнений:
+\begin_inset Formula 
+\begin{equation}
+\left\{ \begin{array}{lc}
+z_{k}=D(\mathbf{x}_{k};\{\mathbf{c}_{j}\},\{\mathbf{S}_{j}\}), & k=1,\dots,N\\
+\mathbf{v}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}\\
+\mathbf{c}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}\mathbf{x}_{k}}, & j=1,\dots,K\\
+\mathbf{S}_{j}=\frac{1}{V_{j}}{\displaystyle \sum\limits _{k\in\mathbf{I}_{j}}v_{k}(\mathbf{x}_{k}-\mathbf{c}_{j})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j})}, & j=1,\dots,K
+\end{array}\right.\label{eq:eq_c_S}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Вектор весов 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+ при 
+\begin_inset Formula $\mathbf{c}_{j}=\mathbf{c}_{j}^{*}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}_{j}=\mathbf{S}_{j}^{*}$
+\end_inset
+
+ также можно использовать в
+\begin_inset space ~
+\end_inset
+
+качестве оценки значимости точек.
+ Так как 
+\begin_inset Formula $v_{1}+\cdots+v_{N}=1$
+\end_inset
+
+, то выбросам будут соответствовать точки с
+\begin_inset space ~
+\end_inset
+
+наименьшими значениями весов.
+\end_layout
+
+\begin_layout Standard
+Устойчивость по
+\begin_inset space ~
+\end_inset
+
+отношению к
+\begin_inset space ~
+\end_inset
+
+выбросам достигается за
+\begin_inset space ~
+\end_inset
+
+счет того, что веса точек, соответствующих выбросам, оказывается существенно
+ меньше, чем веса точек, не
+\begin_inset space ~
+\end_inset
+
+являющихся выбросами.
+ Важно также то, величина веса точки убывает по
+\begin_inset space ~
+\end_inset
+
+мере роста модуля разности между 
+\begin_inset Formula $\bar{z}=\nabla\mathsf{M}\{z_{1},\dots,z_{N}\}$
+\end_inset
+
+ и 
+\begin_inset Formula $z_{k}$
+\end_inset
+
+.
+ Такие свойства являются естественным следствием робастности оценок среднего
+ значения.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename ../itnt20/kmeans_iris2_robust.eps
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+а)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+б)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+IRIS
+\family default
+: Робастный алгоритм
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename ../itnt20/kmeans_iris2_kmeans.eps
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+а)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+б)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+IRIS
+\family default
+: Классический алгоритм.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Алгоритм
+\end_layout
+
+\begin_layout Standard
+Для поиска 
+\begin_inset Formula $\mathbf{c}_{1}^{*},\dots,\mathbf{c}_{K}^{*}$
+\end_inset
+
+ и 
+\begin_inset Formula $\mathbf{S}_{1}^{*},\dots,\mathbf{S}_{K}^{*}$
+\end_inset
+
+ применим итерационную схему, которая соответствует аналогу методу Якоби
+ для решения системы нелинейных уравнений
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq_c_S"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Начальные положения центров выбираются некоторым образом, например: 
+\begin_inset Formula 
+\[
+\left\{ \begin{array}{l}
+\mathbf{c}_{j,0}={\displaystyle \frac{1}{N}\sum\limits _{k=1}^{N}\mathbf{x}_{k}}\\
+\mathbf{S}_{j,0}=\mathbf{E}^{n\times n},
+\end{array}\right.
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\mathbf{E}^{n\times n}$
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+– единичная матрица 
+\begin_inset Formula $n\times n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+На 
+\begin_inset Formula $t$
+\end_inset
+
+-ом шаге последовательно решаются два уравнения:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Для каждого 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+ сначала решается следующее векторное уравнение для нахождения 
+\begin_inset Formula $\mathbf{c}_{j,t+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\mathbf{c}_{j}=\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}}\mathbf{x}_{k},\label{eq:eq_c}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula $z_{k}=D(\mathbf{x}_{k};\mathbf{c}_{1},\dots,\mathbf{c}_{K};\mathbf{S}_{1,t},\dots,\mathbf{S}_{K,t})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Затем для каждого 
+\begin_inset Formula $j=1,\dots,K$
+\end_inset
+
+ решается следующее векторное уравнение для нахождения 
+\begin_inset Formula $\mathbf{S}_{j,t+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\mathbf{S}_{j}=\sum\limits _{k\in\mathbf{I}_{j}}\frac{\partial\mathsf{M}\{z_{1},\dots,z_{N}\}}{\partial z_{k}}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1})^{\prime}(\mathbf{x}_{k}-\mathbf{c}_{j,t+1}),\label{eq:eq_S}
+\end{equation}
+
+\end_inset
+
+где 
+\begin_inset Formula $z_{k}=D(\mathbf{x}_{k};\mathbf{c}_{t+1},\mathbf{S})$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Шаг 1 повторяется до тех пор, пока 
+\begin_inset Formula $t<T$
+\end_inset
+
+ (максимальное число итераций) или последовательность 
+\begin_inset Formula $\{\mathcal{Q}(\mathbf{c}_{t,1},\dots,\mathbf{c}_{t,K};\mathbf{S}_{t,1},\dots,\mathbf{S}_{t,K})\}$
+\end_inset
+
+ не
+\begin_inset space ~
+\end_inset
+
+сконцентрируется вокруг своей точки сгущения.
+\end_layout
+
+\begin_layout Standard
+Множества индексов точек 
+\begin_inset Formula $\mathbf{I}_{1},\dots,\mathbf{I}_{K}$
+\end_inset
+
+, соответствующие разбиению на
+\begin_inset space ~
+\end_inset
+
+кластеры, находятся перед решением систем уравнений.
+ Дополнительное условие 
+\begin_inset Formula $|\mathbf{S}|=1$
+\end_inset
+
+ обычно добавляется, чтобы предотвратить вырождение корреляционной матрицы.
+ Показатель масштаба 
+\begin_inset Formula $\sigma=|\mathbf{S}|$
+\end_inset
+
+ можно затем оценить при помощи 
+\begin_inset Formula $\mathsf{S}$
+\end_inset
+
+-эстиматора
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Dav1987"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Примеры
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename ../itnt20/kmeans_s3_robust.eps
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../itnt20/kmeans_s3_kmeans.eps
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+а)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+б)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S3
+\family default
+: Результаты робастного и классического алгоритмов.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Graphics
+	filename ../itnt20/kmeans_s4_robust.eps
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../itnt20/kmeans_s4_kmeans.eps
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+а)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+б)
+\begin_inset space \hspace*{\fill}
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\family sans
+S4
+\family default
+: Результаты робастного и классического алгоритмов.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+1.
+
+\series default
+ Расcмотрим относительно простой и классический набор данных 
+\family sans
+iris
+\family default
+.
+ Как правило, он используется для задач классификации.
+ Мы же здесь попытаемся идентифицировать классы при помощи кластеризации,
+ используя расстояния Махаланобиса вместо Евклидового.
+ На Рис.
+\begin_inset space ~
+\end_inset
+
+1 слева на
+\begin_inset space ~
+\end_inset
+
+а) представлен результат робастной кластеризации, справа на
+\begin_inset space ~
+\end_inset
+
+б) исходное разбиение на
+\begin_inset space ~
+\end_inset
+
+классы.
+ Нетрудно убедиться, что можно получить разбиение, которое отличается от
+\begin_inset space ~
+\end_inset
+
+заданного в
+\begin_inset space ~
+\end_inset
+
+3-х точках из
+\begin_inset space ~
+\end_inset
+
+150-ти.
+ Для сравнение на Рис.
+\begin_inset space ~
+\end_inset
+
+2 приведено разбиение, полученное при помощи классического метода.
+ Здесь отличие в
+\begin_inset space ~
+\end_inset
+
+5-ти точках.
+ Хотя прееимущество минимальное, но с
+\begin_inset space ~
+\end_inset
+
+учетом того, что наилучшие надежные алгоритмы классификации по
+\begin_inset space ~
+\end_inset
+
+данным набора iris как раз дают 98% точности и выше, то это можно считать
+ хорошим результатом.
+ Он показывает, что применение робастного подхода к
+\begin_inset space ~
+\end_inset
+
+кластеризации на
+\begin_inset space ~
+\end_inset
+
+основе реалистичного набора признаков можно получать разбиения, которые
+ практически соответствуют заданной классификации.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+2.
+
+\series default
+ Рассмотрим наборы данных 
+\family sans
+S3-S4
+\family default
+
+\begin_inset space ~
+\end_inset
+
+из
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SD2018,sdataset"
+literal "false"
+
+\end_inset
+
+.
+ Они содержит 5000 точек, 15 кластеров.
+ Среди наборов данных 
+\family sans
+S1–S4
+\family default
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sdataset"
+literal "false"
+
+\end_inset
+
+, в 
+\family sans
+S3-S4
+\family default
+ доля выбросов – 
+\emph on
+наибольшая
+\emph default
+.
+ Именно поэтому этот набор данных представляет наибольший интерес.
+ Для сравнения приведем результаты применения стандартный метода 
+\family sans
+k-means
+\family default
+, но с учетом корреляционной матрицы.
+ На Рис.
+\begin_inset space ~
+\end_inset
+
+3
+\begin_inset space ~
+\end_inset
+
+и 
+\begin_inset space ~
+\end_inset
+
+4 представлены результаты кластеризации для наборов 
+\family sans
+S3
+\family default
+ и 
+\family sans
+S4
+\family default
+, соответственно.
+ На
+\begin_inset space ~
+\end_inset
+
+а) представлен результат работы робастного алгоритма, а на
+\begin_inset space ~
+\end_inset
+
+б) – классического.
+\end_layout
+
+\begin_layout Section*
+Заключение
+\end_layout
+
+\begin_layout Standard
+В настоящей работе рассмотривался вариант 
+\family sans
+k-means
+\family default
+, в
+\begin_inset space ~
+\end_inset
+
+котором вместо евклидова расстояния использовалось расстояние Махаланобиса.
+ Предложенный новый подход к
+\begin_inset space ~
+\end_inset
+
+построению робастного варианта 
+\family sans
+k-means
+\family default
+ на
+\begin_inset space ~
+\end_inset
+
+основе расстояния Махаланобиса, основанный на минимизации робастных дифференциру
+емых оценок среднего показал свою принципиальную устойчивость к
+\begin_inset space ~
+\end_inset
+
+искажениям в
+\begin_inset space ~
+\end_inset
+
+данных, по
+\begin_inset space ~
+\end_inset
+
+сравнению с
+\begin_inset space ~
+\end_inset
+
+классическим алгоритмом 
+\family sans
+k-means
+\family default
+.
+ Связано это с
+\begin_inset space ~
+\end_inset
+
+тем, что применяемые в
+\begin_inset space ~
+\end_inset
+
+работе робастные оценки среднего ограничивают влияние на
+\begin_inset space ~
+\end_inset
+
+поиск положения центров кластеров точек, которые расположены на
+\begin_inset space ~
+\end_inset
+
+относительно больших расстояниях от
+\begin_inset space ~
+\end_inset
+
+них.
+\end_layout
+
+\begin_layout Section*
+Благодарности
+\end_layout
+
+\begin_layout Standard
+Работа выполнена при поддержке гранта РФФИ №18–01–00050.
+\end_layout
+
+\begin_layout Section*
+Литература
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Teb07"
+literal "false"
+
+\end_inset
+
+Teboulle
+\begin_inset space ~
+\end_inset
+
+M.
+ A Unified Continuous Optimization Framework for Center-Based Clustering
+ Method / M.
+\begin_inset space ~
+\end_inset
+
+Teboulle // Journal of Machine Learning Research.
+ – 2007 – No.
+\begin_inset space \thinspace{}
+\end_inset
+
+8, PP.
+\begin_inset space \thinspace{}
+\end_inset
+
+65-102.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Mar1976"
+literal "false"
+
+\end_inset
+
+Maronna
+\begin_inset space ~
+\end_inset
+
+R.A.
+ Robust M-Estimators of Multivariate Location and Scatter / R.A.
+\begin_inset space ~
+\end_inset
+
+Maronna // Ann.
+ Statist, 1976 – Vol.4 – PP.51–67.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Rus2013"
+literal "false"
+
+\end_inset
+
+Rousseeuw
+\begin_inset space ~
+\end_inset
+
+P.
+ High-breakdown estimators of multivariate location and scatter / P.
+\begin_inset space ~
+\end_inset
+
+Rousseeuw, M.~Hubert // Robustness and Complex Data Structures.
+ Ed.: C.
+\begin_inset space ~
+\end_inset
+
+Becker, R.
+\begin_inset space ~
+\end_inset
+
+Fried, S.
+\begin_inset space ~
+\end_inset
+
+Kuhnt., 2013 – Springer – PP.
+\begin_inset space ~
+\end_inset
+
+49–66.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Mar2015"
+literal "false"
+
+\end_inset
+
+Maronna
+\begin_inset space ~
+\end_inset
+
+R.A.
+ Robust and efficient estimation of multivariate scatter and location /
+ R.A.
+\begin_inset space ~
+\end_inset
+
+Maronna, V.J.
+\begin_inset space ~
+\end_inset
+
+Yohai // arxiv:1504.03389, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hub09"
+literal "false"
+
+\end_inset
+
+Huber
+\begin_inset space ~
+\end_inset
+
+P.J.
+ Robust Statistics.
+ NY: John Wiley and Sons – 1981.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sz2017"
+literal "false"
+
+\end_inset
+
+Шибзухов
+\begin_inset space ~
+\end_inset
+
+З.М.
+ О принципе минимизации эмпирического риска на основе усредняющих агрегирующих
+ функций / 
+\emph on
+З.М.
+\begin_inset space ~
+\end_inset
+
+Шибзухов
+\emph default
+ // Доклады РАН.
+ М.:МАИК 
+\begin_inset Quotes cld
+\end_inset
+
+Наука
+\begin_inset Quotes crd
+\end_inset
+
+, 2017 – Т.476 – №5 – С.495-499.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sz2019"
+literal "false"
+
+\end_inset
+
+Shibzukhov
+\begin_inset space ~
+\end_inset
+
+Z.M.
+ Clustering based on the principle of finding centers and robust averaging
+ functions of aggregation / Z.M.
+\begin_inset space ~
+\end_inset
+
+Shibzukhov, M.A.
+\begin_inset space ~
+\end_inset
+
+Kazakov // Proceedings of V International Conference Information Technology
+ and Nanotechnology – ITNT 2019.
+ Journal of Physics: Conference Series [Электронный ресурс] – Режим доступа:
+ https://iopscience.iop.org/article/10.1088/1742-6596/1368/5/052010/pdf
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Dav1987"
+literal "false"
+
+\end_inset
+
+Davies
+\begin_inset space ~
+\end_inset
+
+P.L.
+ Asymptotic behavior of S-estimates of multivariate location parameters
+ and dispersion matrices / P.L.
+\begin_inset space ~
+\end_inset
+
+Davies // Ann.
+ Statist.
+ – 1987 – Vol.15 – PP.1269–1292.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "SD2018"
+literal "false"
+
+\end_inset
+
+Fränti
+\begin_inset space ~
+\end_inset
+
+P.
+ , Sieranoja
+\begin_inset space ~
+\end_inset
+
+S.
+ K-means properties on six clustering benchmark datasets / P.
+\begin_inset space ~
+\end_inset
+
+Fränti, S.
+\begin_inset space ~
+\end_inset
+
+Sieranoja // Applied Intelligence – 2018 – V.48 – No.12 – PP.4743–4759.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sdataset"
+literal "false"
+
+\end_inset
+
+Clustering basic benchmark [Электронный ресурс].
+ – Режим доступа: http://cs.joensuu.fi/sipu/datasets/
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+smallskip
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent{
+\backslash
+Large
+\backslash
+bf{Robust k-means method based on~minimizing 
+\backslash
+
+\backslash
+ differentiable estimates of~mean insensitive to~outliers}}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hangindent=2.5cm 
+\backslash
+noindent 
+\backslash
+hangafter=-1 {
+\backslash
+bf $^{1,2}$
+\backslash
+,Z.M.~Shibzukhov, $^1$
+\backslash
+,M.A.~Kazakov, $^2$
+\backslash
+,D.P.~Dimitrichenko}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hangindent=2.5cm 
+\backslash
+noindent 
+\backslash
+hangafter=-2 {$^1$
+\backslash
+,Institute of Applied Mathematics and Automation KBSC RAS, Shortanova st.89A,
+ Nalchick, Russia}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hangindent=2.5cm 
+\backslash
+noindent 
+\backslash
+hangafter=-2 {$^2$
+\backslash
+,Institute of mathematics and Informatics MPSU, Krasnoprudnaya st.
+ 14, Moscow, Russia}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hangindent=2.5cm 
+\backslash
+noindent 
+\backslash
+hangafter=-5 {
+\backslash
+bf Abstract.} A new approach toconstructing avariant of the k-means clustering
+ algorithm isproposed, in which the Mahalanobis distance is used instead
+ of the Euclidean distance.
+ It is based on minimizing differentiable estimates of average values that
+ are insensitive tooutliers.
+ The examples show the possibility of stability of the proposed algorithm
+ with respect tooutliers in the data.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
