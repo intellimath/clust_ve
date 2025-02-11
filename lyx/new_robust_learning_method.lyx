@@ -1,0 +1,401 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\def\sign{\mathop{\mathrm{sign}}}
+\def\sgn{\mathop{\mathrm{sgn}}}
+
+\usepackage{mymath}
+\setmathcolor{red!50!black}
+\let\oldemph=\emph
+\def\emph#1{\oldemph{\color{brown}#1}}
+\def\arraystretch{1.44}
+
+\usepackage[math]{pscyr}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children no
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "cmbr" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 95 100
+\font_tt_scale 100 100
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf2
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement class
+\float_alignment class
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize a4
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\footskip 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Классический метод эмпирического риска основан на минимизации среднего арифметического от потерь:
+\begin_inset Formula 
+\[
+\mathcal{Q}(w)=\frac{1}{N}\sum_{k=1}^{N}\ell_{k}(w),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\ell_{k}(w)$
+\end_inset
+
+ —
+ неотрицательная функция потерь для 
+\begin_inset Formula $k$
+\end_inset
+
+-ого объектом обучающей выборки.
+ Если набор значений 
+\begin_inset Formula $\{z_{k}\colon z_{k}=\ell_{k}(w)\}_{k=1}^{N}$
+\end_inset
+
+,
+ содержит выбросы,
+ то среднее арифметическое нельзя использовать как эмпирическую оценку среднего значения.
+ Вместо среднего арифметического следует использовать оценки среднего,
+ которые являются более устойчивыми к выбросам.
+ Например,
+ можно использовать цензурированное среднее арифметическое:
+\begin_inset Formula 
+\[
+\mathsf{CM}\{z_{1},\dots,z_{N}\}=\frac{1}{N}\sum_{k=1}^{N}\min(z_{k},\tilde{z}),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\tilde{z}$
+\end_inset
+
+ —
+ некоторое пороговое значение.
+ Например,
+ можно использовать величину 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-квантиля 
+\begin_inset Formula $\bar{z}_{\alpha}$
+\end_inset
+
+,
+ где 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ соответствует доле значений из 
+\begin_inset Formula $z_{1},\dots,z_{N}$
+\end_inset
+
+,
+ которые не являются выбросами.
+ Однако заранее трудно оценить количество выбросов в данных.
+\end_layout
+
+\begin_layout Standard
+Тогда можно использовать следующий вариант:
+ 
+\begin_inset Formula 
+\[
+\tilde{z}=\mu+\alpha\sigma,
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\mu$
+\end_inset
+
+ —
+ оценка среднего,
+ 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ —
+ оценка дисперсии,
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ —
+ пороговый параметр.
+ Тогда
+\begin_inset Formula 
+\[
+\frac{\partial\tilde{z}}{\partial z_{k}}=\frac{\partial\mu}{\partial z_{k}}+\alpha\frac{\partial\sigma}{\partial z_{k}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Классический пример:
+ 
+\begin_inset Formula $\mu$
+\end_inset
+
+ —
+ среднее арифметическое,
+ 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ —
+ стандартное отклонение,
+ 
+\begin_inset Formula $\alpha=3$
+\end_inset
+
+.
+ Тогда
+\begin_inset Formula 
+\[
+\frac{\partial\mu}{\partial z_{k}}=\frac{1}{N},\qquad\frac{\partial\sigma}{\partial z_{k}}=\frac{1}{N}\frac{z_{k}-\mu}{\sigma}+\frac{1}{N^{2}}\frac{1}{\sigma}\sum_{l=1}^{N}(z_{l}-\mu)=\frac{1}{N}\frac{z_{k}-\mu}{\sigma}.
+\]
+
+\end_inset
+
+Нас будет интересовать более робастный вариант:
+\begin_inset Formula 
+\[
+\begin{array}{l}
+\mu_{\text{med}}=\text{median}\{z_{1},\dots,z_{N}\},\\
+\sigma_{\text{med}}=\kappa\cdot\text{median}\{|z_{1}-\mu_{\text{med}}|,\dots,|z_{N}-\mu_{\text{med}}|\},\quad\kappa=1.4826.
+\end{array}
+\]
+
+\end_inset
+
+Т.е.
+ необходимо чтобы 
+\begin_inset Formula $\mathcal{Q}$
+\end_inset
+
+ была дифференцируема,
+ то вместо обычной медианы будем использовать сглаженный вариант медианы:
+\begin_inset Formula 
+\[
+\bar{z}_{\rho}=\mathsf{M}_{\rho}\{z_{1},\dots,z_{N}\}=\arg\min_{u}\sum_{k=1}^{N}\rho_{\varepsilon}(z_{k}-u),
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $\rho_{\varepsilon}(z)$
+\end_inset
+
+ —
+ строго выпуклая функция,
+ которая удовлетворяет условиям:
+\end_layout
+
+\begin_layout Standard
+1)
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\lim\limits_{\varepsilon\to0}\rho_{\varepsilon}(z)=|z|$
+\end_inset
+
+;
+ 
+\end_layout
+
+\begin_layout Standard
+2)
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\lim\limits_{\varepsilon\to0}\rho_{\varepsilon}^{\prime}(z)=\sign z$
+\end_inset
+
+;
+ 
+\end_layout
+
+\begin_layout Standard
+3)
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\lim\limits_{\varepsilon\to0}\rho_{\varepsilon}^{\prime\prime}(z)=\delta(z)$
+\end_inset
+
+ (
+\begin_inset Formula $\delta$
+\end_inset
+
+-функция Дирака).
+\end_layout
+
+\begin_layout Standard
+Например:
+\end_layout
+
+\begin_layout Standard
+1) 
+\begin_inset Formula $\rho_{\varepsilon}(z)=\sqrt{\varepsilon^{2}+z^{2}}-\varepsilon$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Standard
+2) 
+\begin_inset Formula $\rho_{\varepsilon}(z)=\varepsilon\ln\bigl(\dfrac{e^{z/\varepsilon}+e^{-z/\varepsilon}}{2}\bigr).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Сглаженную медианную дисперсию определим следующим образом:
+\begin_inset Formula 
+\[
+\rho(\bar{\sigma}_{\rho})=\mathsf{M}_{\rho}\bigl\{\rho(z_{1}-\bar{z}_{\rho}),\dots,\rho(z_{N}-\bar{z}_{\rho})\bigr\}.
+\]
+
+\end_inset
+
+В случае,
+ когда 
+\begin_inset Formula $\rho(r)=\frac{1}{2}r^{2}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\sigma_{\rho}$
+\end_inset
+
+ это стандартное отклонение.
+\end_layout
+
+\begin_layout Standard
+Обозначим 
+\begin_inset Formula $u_{k}=\rho(z_{k}-\bar{z}_{\rho})$
+\end_inset
+
+.
+ Тогда 
+\begin_inset Formula 
+\[
+\frac{\partial\tilde{z}}{\partial z_{k}}=\frac{\partial\bar{z}_{\rho}}{\partial z_{k}}+\alpha\frac{\partial\bar{\sigma}_{\rho}}{\partial z_{k}},
+\]
+
+\end_inset
+
+где
+\begin_inset Formula 
+\[
+\frac{\partial\bar{\sigma}_{\rho}}{\partial z_{k}}=\frac{1}{\rho^{\prime}(\bar{\sigma}_{\rho})}\Bigl(\rho^{\prime}(z_{k}-\bar{z}_{\rho})\frac{\partial\bar{u}_{\rho}}{\partial u_{k}}-\frac{\partial\bar{z}_{\rho}}{\partial z_{k}}\sum_{l=1}^{N}\frac{\partial\bar{u}_{\rho}}{\partial u_{l}}\rho^{\prime}(z_{l}-\bar{z}_{\rho})\Bigr),
+\]
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
